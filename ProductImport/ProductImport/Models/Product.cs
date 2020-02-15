@@ -9,7 +9,7 @@ namespace ProductImport.Models
         public string Title { get; set; }
     }
 
-    public class RootObject
+    public class ProductList
     {
         public List<Product> Products { get; set; }
     }

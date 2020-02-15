@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProductImport.ImportService;
+using ProductImport.Models;
+using ProductImport.Repository.Interfaces;
 using ProductImport.StartupConfiguration;
 using System;
 
@@ -29,6 +31,9 @@ namespace ProductImport
             }
 
 
+            var productRepository = serviceProvider.GetService<IRepository<Product>>();
+            productRepository.AddRange(products);
+            Console.WriteLine("Saved to DB");
         }
     }
 }

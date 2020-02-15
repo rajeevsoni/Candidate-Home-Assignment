@@ -4,17 +4,42 @@ using System.Collections.Generic;
 
 namespace ProductImport.Repository
 {
-    public class SQLProductRepository : IProductRepository
+    public class SQLProductRepository : IRepository<Product>
     {
-        public List<Product> GetAllProducts()
+        public void Add(Product entity)
         {
-            //todo implement get products from sql
-            return new List<Product>();
+            //todo add implementation
         }
 
-        public void SaveProducts(List<Product> products)
+        public void AddRange(IEnumerable<Product> entities)
         {
-            //todo implement save Product to sql db
+            //todo add implementation
+        }
+
+        public void Delete(Product entity)
+        {
+            //todo add implementation
+        }
+
+        public void DeleteRange(IEnumerable<Product> entities)
+        {
+            //todo add implementation
+        }
+
+        public Product Get(int id)
+        {
+            //todo add implementation
+            return new Product();
+        }
+
+        public void Update(Product entity)
+        {
+            //todo add implementation
+        }
+
+        public void UpdateRange(IEnumerable<Product> entities)
+        {
+            //todo add implementation
         }
     }
 }

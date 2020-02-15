@@ -13,8 +13,8 @@ namespace ProductImport.ImportService
             using (var reader = new StreamReader(path))
             {
                 string json = reader.ReadToEnd();
-                var root = JsonConvert.DeserializeObject<RootObject>(json);
-                return root.Products;
+                var productList = JsonConvert.DeserializeObject<ProductList>(json);
+                return productList.Products;
             }
         }
     }

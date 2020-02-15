@@ -2,6 +2,8 @@
 using ProductImport.ImportService;
 using ProductImport.ImportService.Interfaces;
 using ProductImport.Models;
+using ProductImport.Repository;
+using ProductImport.Repository.Interfaces;
 using System;
 
 namespace ProductImport.StartupConfiguration
@@ -21,13 +23,14 @@ namespace ProductImport.StartupConfiguration
                     {
                         case FileType.json: return ServiceProvider.GetService<JSONFileParserStrategy>();
                         case FileType.yaml: return ServiceProvider.GetService<YAMLFileParserStrategy>();
-                        default: return null;
+                        default: throw new NotSupportedException("filetype not supported.");
 
                     }
                 }
                 );
 
             services.AddTransient<FileParserContext>();
+            services.AddTransient<IRepository<Product>, SQLProductRepository>();
         }
     }
 }
