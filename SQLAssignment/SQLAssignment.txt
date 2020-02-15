@@ -1,0 +1,68 @@
+/*1*/
+SELECT id, first_name, last_name, email, status, created
+FROM testtest22.users WHERE id in (3,2,4);
+
+/*2*/
+SELECT 
+u.id,
+u.first_name,
+u.last_name,
+sum(case when l.status = 2 then 1 else 0 end) AS basic, 
+sum(case when l.status = 3 then 1 else 0 end) AS premium
+FROM testtest22.users u inner join testtest22.listings l on u.id = l.user_id 
+WHERE u.status = 2
+GROUP BY u.id;
+
+
+/*3*/
+SELECT 
+u.id,
+u.first_name,
+u.last_name,
+sum(case when l.status = 2 then 1 else 0 end) AS basic, 
+sum(case when l.status = 3 then 1 else 0 end) AS premium
+FROM testtest22.users u inner join testtest22.listings l on u.id = l.user_id 
+WHERE u.status = 2
+GROUP BY u.id
+HAVING (sum(case when l.status = 3 then 1 else 0 end) >= 1);
+
+/*4*/
+SELECT u.id, u.first_name, u.last_name, c.currency,
+sum(c.price) AS revenue
+FROM testtest22.users u 
+inner join testtest22.listings l on u.id = l.user_id
+inner join testtest22.clicks c on c.listing_id = l.id
+WHERE u.status = 2 AND year(c.created) = 2013 
+GROUP BY  u.id, c.currency;
+
+/*5*/
+INSERT INTO testtest22.clicks ( listing_id, price, currency, created) values (3,4,'USD', now());
+SELECT id FROM testtest22.clicks WHERE listing_id = 3 and price = 4 order by created desc limit 1;
+
+/*6*/
+SELECT l.id, l.name, c.listing_id, c.currency, c.price, c.created 
+FROM testtest22.listings l 
+inner join testtest22.clicks c on l.id = c.listing_id
+Group By l.id
+Having ( year(c.created) != 2013 );
+
+
+/*7*/
+SELECT year(c.created) AS 'date',
+count( distinct(c.listing_id)) as 'total_listings_clicked',
+count( distinct(u.id)) as 'total_vendors_affected'
+FROM testtest22.users u 
+inner join testtest22.listings l on u.id = l.user_id
+inner join testtest22.clicks c on l.id = c.listing_id
+group by c.created;
+
+/*8*/
+SELECT u.id, u.first_name, u.last_name,
+GROUP_CONCAT(
+  l.name 
+  ORDER BY u.id
+  SEPARATOR ','
+) as listing_names
+FROM testtest22.users u inner join testtest22.listings l on u.id = l.user_id 
+where u.status = 2
+group by u.id;
