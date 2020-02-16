@@ -11,13 +11,13 @@ namespace ProductImport.Test
     public class FileParserContextTest
     {
         private FileParserContext fileParserContext;
-        private Mock<Func<FileType, IFileParserStrategy>> strategyProvider;
+        private Func<FileType, IFileParserStrategy> strategyProvider;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            strategyProvider = new Mock<Func<FileType, IFileParserStrategy>>();
-            fileParserContext = new FileParserContext(strategyProvider.Object);
+            strategyProvider = GetStrategy;
+            fileParserContext = new FileParserContext(strategyProvider);
         }
 
         [TestMethod]
@@ -28,5 +28,15 @@ namespace ProductImport.Test
             fileParserContext.ParseProducts(filePath);
 
         }
+
+        Func<FileType, IFileParserStrategy> GetStrategy = fileType => {
+            switch (fileType)
+            {
+                case FileType.json: return new JSONFileParserStrategy();
+                case FileType.yaml: return new YAMLFileParserStrategy();
+                default: throw new NotSupportedException("filetype not supported.");
+            }
+        };
+
     }
 }
