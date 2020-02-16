@@ -5,6 +5,6 @@ Assignment
 3. As this is a console app;ication,just run the applcation and provide an absolute file path to import data(concrete implemention of JSON is there but yaml's concrete implementation is not there)
 5. ToDos (if time is there) : 
     - Add yaml implementation.
-    - Added more unit test cases to cover more scenarios.
+    - Add more unit test cases to cover more scenarios.
     - Add data persistance for SQL Server.
     
